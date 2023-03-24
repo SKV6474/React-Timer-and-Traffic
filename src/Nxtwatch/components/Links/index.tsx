@@ -1,9 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Icon, LinkStyle, MenuDiv } from "../../../Nxtwatch/styledComponent";
+import { Icon, LinkStyle, MenuDiv } from "../../styledComponent";
 
 const Link = () => {
   const { t } = useTranslation();
+
   return (
     <>
       <LinkStyle activeClassName="active" exact to="/">

@@ -4,48 +4,63 @@ import SideBarHeader from "../../../Common/components/sideBarHeader";
 import TrendingSavedUI from "../../../Common/components/trendingSavedUI";
 import Failure from "../../../Common/components/Failure";
 import Loader from "../../../Common/components/Loader";
+import LoadingWrapper from "../../../Common/components/LoadingWrapper";
 
 import WithHeader from "../../hocs/withHeaderHoc/index";
 import WithSideBar from "../../hocs/withSideBarHoc/index";
 
-import { SaveStore } from "../../store/ListStore";
-import { inject, observer } from "mobx-react";
-import * as mobx from "mobx";
+import { trendingList } from "../../store";
+import { observer } from "mobx-react";
 
 import { LoaderContainer, SideContentContainer } from "../../styledComponent";
 
-const TrendingRoute = inject("SaveStore")(
-  observer(() => {
-    const trendingList = mobx.toJS(SaveStore.TrendingList);
+const TrendingRoute = observer(() => {
+  const trendList = trendingList.TrendingList;
 
-    const isResponse = SaveStore.ApiStatusTrending;
+  useEffect(() => {
+    if (
+      trendingList.ApiStatus === "loading" ||
+      trendingList.ApiStatus === "failure"
+    ) {
+      trendingList.fetchTrendingData();
+    }
+  }, []);
 
-    const isLoading = SaveStore.isLoadingTrendingAPI;
-
-    useEffect(() => {
-      if (SaveStore.TrendingList.length === 0) {
-        SaveStore.fetchTrendingData();
-      }
-    }, []);
+  const renderTrendingList = () => {
     return (
       <>
-        <SideContentContainer>
-          <>
-            <SideBarHeader type="trending" />
-            {isResponse && !isLoading && trendingList.length !== 0 && (
-              <TrendingSavedUI DataList={trendingList} />
-            )}
-            {!isResponse && isLoading && (
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            )}
-          </>
-          {!isResponse && !isLoading && <Failure />}
-        </SideContentContainer>
+        <SideBarHeader type="trending" />
+        <TrendingSavedUI DataList={trendList} />
       </>
     );
-  })
-);
+  };
 
+  const renderLoadingView = () => {
+    return (
+      <>
+        <SideBarHeader type="trending" />
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      </>
+    );
+  };
+
+  const renderFailureView = () => {
+    return <Failure />;
+  };
+
+  return (
+    <>
+      <SideContentContainer>
+        <LoadingWrapper
+          apiStatus={trendingList.ApiStatus}
+          renderLoadingUi={renderLoadingView}
+          renderFailureUi={renderFailureView}
+          renderSuccessUi={renderTrendingList}
+        ></LoadingWrapper>
+      </SideContentContainer>
+    </>
+  );
+});
 export default WithHeader(WithSideBar(TrendingRoute));

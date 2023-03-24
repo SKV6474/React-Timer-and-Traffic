@@ -650,6 +650,13 @@ export const VideoDetailContainer = styled.div`
   padding: 20px;
 `;
 
+export const VideoFetchFailureContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 850px;
+`;
+
 export const VideoLoaderContainer = styled.div`
   display: flex;
   justify-content: center;

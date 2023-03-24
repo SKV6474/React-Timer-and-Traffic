@@ -6,14 +6,14 @@ import TrendingSavedUI from "../../../Common/components/trendingSavedUI";
 
 import NoSavedVideosRoute from "../../components/NoSavedVideo";
 
-import { SaveStore } from "../../store/ListStore";
+import { saveList } from "../../store";
 import { inject, observer } from "mobx-react";
 
 import { SideContentContainer } from "../../styledComponent";
 
-const SavedVideosRoute = inject("SaveStore")(
+const SavedVideosRoute = inject("saveList")(
   observer(() => {
-    const SavedList = SaveStore.SavedVideoList;
+    const SavedList = saveList.SavedVideoList;
 
     return (
       <>

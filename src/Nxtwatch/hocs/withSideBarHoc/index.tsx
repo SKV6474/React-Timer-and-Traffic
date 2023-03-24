@@ -1,7 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import Link from "../../../Common/components/Links";
+import Link from "../../components/Links";
+
+import { Props } from "../../interface";
+
+import {
+  FACEBOOK_LOGO,
+  LINKED_IN_LOGO,
+  TWITTER_LOGO,
+} from "../../constants/images";
 
 import {
   SideBarDiv,
@@ -15,8 +23,9 @@ import {
 const WithSideBar = (
   WrappedComponent: React.ComponentType<any>
 ): React.ComponentType<any> => {
-  const SideBar = (props: any) => {
+  const SideBar = (props: Props) => {
     const { t } = useTranslation();
+
     return (
       <SideWithContentContainer>
         <SideBarDiv>
@@ -28,19 +37,13 @@ const WithSideBar = (
               <b style={{ fontSize: "18px" }}>{t("CONTACT US")}</b>
             </div>
             <ContactContainer>
-              <ContactImg
-                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-                alt="Facebook"
-              ></ContactImg>
+              <ContactImg src={FACEBOOK_LOGO} alt="Facebook"></ContactImg>
               <ContactImg
                 style={{ margin: "0 15px" }}
-                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                src={TWITTER_LOGO}
                 alt="Twitter"
               ></ContactImg>
-              <ContactImg
-                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                alt="linked in"
-              ></ContactImg>
+              <ContactImg src={LINKED_IN_LOGO} alt="linked in"></ContactImg>
             </ContactContainer>
             <ContactDescription>
               {t("Enjoy! Now to see your channels and recommendations!")}

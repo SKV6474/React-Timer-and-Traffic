@@ -1,5 +1,8 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import { GameObject } from "../../interface";
+
 import {
   GameCard,
   GameDataCardDiv,
@@ -7,12 +10,11 @@ import {
   ShortDataGame,
   ShortDataGamUpper,
 } from "../../../Nxtwatch/styledComponent";
-import { useTranslation } from "react-i18next";
 
 const GamingCard = (props: { GameData: GameObject }) => {
   const { t } = useTranslation();
-
   const { GameData } = props;
+
   return (
     <GameCard>
       <GameThumbUrl src={GameData.thumbnail_url} alt="ThumbUrl"></GameThumbUrl>

@@ -1,12 +1,11 @@
-import { WithTranslation } from "react-i18next";
 import { RouteComponentProps } from "react-router-dom";
 
-export type userDeatailsType = {
+export type UserDeatailsType = {
   username: string;
   password: string;
 };
 
-export type videosList = {
+export type VideosList = {
   channel: { name: string; profile_image_url: string };
   id: string;
   published_at: string;
@@ -55,8 +54,31 @@ export type MenuCloseFunc = {
   onChange: () => void;
 };
 
-export type Props = WithTranslation & RouteComponentProps<{ id: string }>;
-export interface State {
-  isLogoutPop: boolean;
-  isLinkPop: boolean;
+export type Props = RouteComponentProps<{ id: string }>;
+
+export enum ApiStatus {
+  initial = "initial",
+  loading = "loading",
+  success = "success",
+  failure = "failure",
 }
+
+export type LoadingWrapperProp = {
+  apiStatus: ApiStatus;
+  renderLoadingUi: () => JSX.Element;
+  renderFailureUi: () => JSX.Element;
+  renderSuccessUi: () => JSX.Element;
+};
+
+export type LoginSubmit = {
+  onSubmitForm: (userDetails: UserDeatailsType) => void;
+};
+
+export type BannerProp = {
+  handleCloseEvent: () => void;
+};
+
+export type VideoDetailProps = {
+  videoDetails: OfVideoDetails | undefined;
+  index: number;
+};

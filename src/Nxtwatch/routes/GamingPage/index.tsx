@@ -1,17 +1,22 @@
-import { useEffect } from "react";
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactFragment,
+  useEffect,
+} from "react";
 
 import SideBarHeader from "../../../Common/components/sideBarHeader";
 import Failure from "../../../Common/components/Failure";
 import Loader from "../../../Common/components/Loader";
+import LoadingWrapper from "../../../Common/components/LoadingWrapper";
 
 import WithHeader from "../../hocs/withHeaderHoc/index";
 import WithSideBar from "../../hocs/withSideBarHoc/index";
 
 import GamingCard from "../../components/GamingCard";
 
-import { inject, observer } from "mobx-react";
-import * as mobx from "mobx";
-import { SaveStore } from "../../store/ListStore";
+import { gameList } from "../../store";
+import { observer } from "mobx-react";
 
 import {
   GameRouteContainer,
@@ -20,49 +25,69 @@ import {
   SideContentContainer,
 } from "../../styledComponent";
 
-const GamingRoute = inject("SaveStore")(
-  observer(() => {
-    const gamingList = mobx.toJS(SaveStore.GamingList);
+const GamingRoute = observer(() => {
+  const gamingList = gameList.GamingList;
 
-    const response = SaveStore.ApiStatusGame;
-
-    const isLoading = SaveStore.isLoadingGameAPI;
-
-    useEffect(() => {
-      if (SaveStore.GamingList.length === 0) {
-        SaveStore.fetchGameData();
-      }
-    }, []);
-
-    let GamingCardList;
-
-    if (gamingList.length !== 0) {
-      GamingCardList = gamingList?.map((ele) => (
-        <GameVideoLink to={`/videos/${ele.id}`}>
-          <GamingCard key={ele.id} GameData={ele} />
-        </GameVideoLink>
-      ));
+  useEffect(() => {
+    if (gameList.ApiStatus === "failure" || gameList.ApiStatus === "loading") {
+      gameList.fetchGameData();
     }
+  }, []);
 
+  let GamingCardList:
+    | string
+    | number
+    | boolean
+    | JSX.Element[]
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | ReactFragment
+    | null
+    | undefined;
+
+  if (gamingList.length !== 0) {
+    GamingCardList = gamingList?.map((ele) => (
+      <GameVideoLink to={`/videos/${ele.id}`}>
+        <GamingCard key={ele.id} GameData={ele} />
+      </GameVideoLink>
+    ));
+  }
+
+  const renderGamingList = () => {
     return (
       <>
-        <SideContentContainer>
-          <>
-            <SideBarHeader type="gaming" />
-            {response && !isLoading && (
-              <GameRouteContainer>{GamingCardList}</GameRouteContainer>
-            )}
-            {!response && isLoading && (
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            )}
-          </>
-          {!response && !isLoading && <Failure />}
-        </SideContentContainer>
+        <SideBarHeader type="gaming" />
+        <GameRouteContainer>{GamingCardList}</GameRouteContainer>
       </>
     );
-  })
-);
+  };
+
+  const renderLoadingView = () => {
+    return (
+      <>
+        <SideBarHeader type="gaming" />
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      </>
+    );
+  };
+
+  const renderFailureView = () => {
+    return <Failure />;
+  };
+
+  return (
+    <>
+      <SideContentContainer>
+        <LoadingWrapper
+          apiStatus={gameList.ApiStatus}
+          renderLoadingUi={renderLoadingView}
+          renderFailureUi={renderFailureView}
+          renderSuccessUi={renderGamingList}
+        ></LoadingWrapper>
+      </SideContentContainer>
+    </>
+  );
+});
 
 export default WithHeader(WithSideBar(GamingRoute));

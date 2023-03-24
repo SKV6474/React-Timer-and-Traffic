@@ -1,12 +1,17 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import WithHeader from "../../hocs/withHeaderHoc";
-import WithSideBar from "../../hocs/withSideBarHoc";
+import {
+  NXT_WATCH_NOT_FOUND_DARK_THEME,
+  NXT_WATCH_NOT_FOUND_LIGHT_THEME,
+} from "../../../Nxtwatch/constants/images";
 
-import { toggleTheme } from "../../store/Theme";
+import WithHeader from "../../../Nxtwatch/hocs/withHeaderHoc";
+import WithSideBar from "../../../Nxtwatch/hocs/withSideBarHoc";
 
-import { SideContentContainer } from "../../styledComponent";
+import { toggleTheme } from "../../../Nxtwatch/store";
+
+import { SideContentContainer } from "../../../Nxtwatch/styledComponent";
 import {
   NotFoundContainer,
   NotFoundContent,
@@ -20,14 +25,14 @@ const NotFoundPage = () => {
   return (
     <SideContentContainer>
       <NotFoundContainer>
-        {toggleTheme.isLightMode ? (
+        {toggleTheme.Theme === "light" ? (
           <NotFoundImg
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-not-found-light-theme-img.png"
+            src={NXT_WATCH_NOT_FOUND_LIGHT_THEME}
             alt="Not Found"
           ></NotFoundImg>
         ) : (
           <NotFoundImg
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-not-found-dark-theme-img.png"
+            src={NXT_WATCH_NOT_FOUND_DARK_THEME}
             alt="Not Found"
           ></NotFoundImg>
         )}

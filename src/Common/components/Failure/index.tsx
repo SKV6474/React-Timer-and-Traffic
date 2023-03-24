@@ -1,4 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
+import { toggleTheme } from "../../../Nxtwatch/store";
+import {
+  FAILURE_VIEW_DARK,
+  FAILURE_VIEW_LIGHT,
+} from "../../../Nxtwatch/constants/images";
+
 import {
   FailureContainer,
   FailureContent,
@@ -8,23 +16,14 @@ import {
   RetryBtn,
 } from "./styledComponets";
 
-import { toggleTheme } from "../../../Nxtwatch/store/Theme";
-import { useTranslation } from "react-i18next";
-
 const Failure = () => {
   const { t } = useTranslation();
   return (
     <FailureContainer>
-      {toggleTheme.isLightMode ? (
-        <FailureImg
-          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-          alt="failure"
-        ></FailureImg>
+      {toggleTheme.Theme === "light" ? (
+        <FailureImg src={FAILURE_VIEW_LIGHT} alt="Failure View"></FailureImg>
       ) : (
-        <FailureImg
-          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png"
-          alt="failure"
-        ></FailureImg>
+        <FailureImg src={FAILURE_VIEW_DARK} alt="Failure view"></FailureImg>
       )}
       <FailureContent>
         <FailureContentTitle>

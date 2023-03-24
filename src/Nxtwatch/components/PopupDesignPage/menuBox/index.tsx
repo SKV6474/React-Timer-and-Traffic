@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "../../../../Common/components/Links";
+import Link from "../../Links";
 import { MenuCloseFunc } from "../../../interface";
 
 import { MenuClose, MenuContainer } from "./styledComponent";

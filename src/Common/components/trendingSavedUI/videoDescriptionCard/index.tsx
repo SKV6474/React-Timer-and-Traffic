@@ -1,6 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+
 import { TrendingOrSaved } from "../../../../Nxtwatch/interface";
+import { getTime } from "../../../../Nxtwatch/utils";
+
 import {
   CardContainer,
   ChannelProfile,
@@ -14,11 +17,8 @@ import {
   ViewsandTime,
 } from "../../../../Nxtwatch/styledComponent";
 
-import { getTime } from "../../../../Nxtwatch/utils";
-
 const VideoDescriptionCard = (props: { Data: TrendingOrSaved }) => {
   const { Data } = props;
-
   const { t } = useTranslation();
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { videosList } from "../../../interface";
-import { getTime } from "../../../utils";
+import { VideosList } from "../../interface";
+import { getTime } from "../../utils";
 import {
   ThumbUrl,
   ChannelProfileContainer,
@@ -9,10 +9,10 @@ import {
   DataContainer,
   Card,
   Dot,
-} from "../../../styledComponent";
+} from "../../styledComponent";
 import { useTranslation } from "react-i18next";
 
-const VideoCard = (props: { object: videosList }) => {
+const VideoCard = (props: { object: VideosList }) => {
   const { t } = useTranslation();
   const { object } = props;
 

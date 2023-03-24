@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { NO_SAVED_VIDEOS } from "../../constants/images";
+
 import {
   NoSavedContainer,
   NoSavedContent,
@@ -14,10 +16,7 @@ const NoSavedVideosRoute = () => {
 
   return (
     <NoSavedContainer>
-      <NoSavedImg
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
-        alt="No Saved videos"
-      ></NoSavedImg>
+      <NoSavedImg src={NO_SAVED_VIDEOS} alt="No Saved videos"></NoSavedImg>
       <NoSavedContent>
         <NoSavedContentTitle>{t("No saved videos found")}</NoSavedContentTitle>
         <NoSavedContentDescription>
